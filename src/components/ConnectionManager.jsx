@@ -1,26 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { socket } from "../socket";
 
 export function ConnectionManager() {
-  function connect() {
-    socket.connect();
-  }
+  const [isConnected, setIsConnected] = useState(socket.connected);
 
-  function disconnect() {
-    socket.disconnect();
-  }
+  useEffect(() => {
+    const onConnect = () => setIsConnected(true);
+    const onDisconnect = () => setIsConnected(false);
+
+    socket.on("connect", onConnect);
+    socket.on("disconnect", onDisconnect);
+
+    return () => {
+      socket.off("connect", onConnect);
+      socket.off("disconnect", onDisconnect);
+    };
+  }, []);
 
   return (
-    <div className="flex gap-3 mb-2">
+    <div className="flex gap-3 mb-4">
+      {/* Connect Button */}
       <button
-        onClick={connect}
-        className="py-2 poine w-20 px-2 border-2 rounded-lg"
+        onClick={() => socket.connect()}
+        disabled={isConnected}
+        className={`w-28 py-2 px-4 rounded-full font-semibold transition 
+          ${
+            isConnected
+              ? "bg-green-800 text-green-300 cursor-not-allowed"
+              : "bg-green-500 text-white hover:bg-green-600 shadow-md"
+          }`}
       >
         Connect
       </button>
+
       <button
-        onClick={disconnect}
-        className="py-2 w-28 border-2 p-2 rounded-lg mr-2"
+        onClick={() => socket.disconnect()}
+        disabled={!isConnected}
+        className={`w-28 py-2 px-4 rounded-full font-semibold transition
+          ${
+            !isConnected
+              ? "bg-red-800 text-red-300 cursor-not-allowed"
+              : "bg-red-500 text-white hover:bg-red-600 shadow-md"
+          }`}
       >
         Disconnect
       </button>
