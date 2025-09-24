@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 
 export default function Signin() {
   return (
@@ -34,6 +35,7 @@ export default function Signin() {
           <button
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition"
+            // onSubmit={handleSubmit}
           >
             Login
           </button>
@@ -41,9 +43,9 @@ export default function Signin() {
 
         <p className="text-sm text-center text-gray-400 mt-4">
           Don’t have an account?{" "}
-          <a href="#" className="text-blue-500 hover:underline">
+          <NavLink to={"/signup"} className="text-blue-500 hover:underline">
             Sign up
-          </a>
+          </NavLink>
         </p>
       </div>
     </div>

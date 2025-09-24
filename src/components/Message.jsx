@@ -1,16 +1,34 @@
 export default function Message({ element, index, socketid }) {
+  const isMe = element[1] === socketid;
+
   return (
     <div
-      className={`rounded-lg px-4 py-2 max-w-[70%] ${
-        element[1] === socketid
-          ? "bg-blue-600 self-end text-white"
-          : "bg-[#40444b] self-start text-gray-200"
-      }`}
+      className={`flex flex-col ${
+        isMe ? "items-end" : "items-start"
+      } group relative`}
     >
-      <div className="text-xs text-gray-400 mb-1">
-        {element[1] === socketid ? "Me" : element[1]}
+      <div
+        className={`rounded-2xl px-4 py-2 max-w-[70%] shadow-sm 
+          ${
+            isMe
+              ? "bg-gradient-to-br from-blue-500 to-blue-600 text-white"
+              : "bg-[#4f545c] text-gray-200"
+          }`}
+      >
+        <div className="flex items-center justify-between mb-1">
+          <span className="text-xs text-gray-300 font-medium">
+            {isMe ? "Me" : element[1]}
+          </span>
+          <span className="text-[10px] text-gray-400 ml-2 opacity-0 group-hover:opacity-100">
+            {/* Optional: timestamp */}
+            {new Date().toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </span>
+        </div>
+        <div className="text-base">{element[0]}</div>
       </div>
-      <div className="text-base">{element[0]}</div>
     </div>
   );
 }

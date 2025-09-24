@@ -51,16 +51,14 @@ export default function () {
         <ConnectionManager />
 
         <div className="h-[77%] bg-[#2f3136] rounded-lg p-4 flex flex-col gap-3 overflow-y-auto">
-          {messages
-            .map((element, index) => (
-              <Message
-                key={`${element}-${index}`}
-                element={element}
-                index={index}
-                socketid={socket.id}
-              />
-            ))
-            .reverse()}
+          {messages.map((element, index) => (
+            <Message
+              key={`${element}-${index}`}
+              element={element}
+              index={index}
+              socketid={socket.id}
+            />
+          ))}
         </div>
 
         <form

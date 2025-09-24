@@ -20,7 +20,6 @@ export default function NotFoundPage() {
         Return to Home
       </Link>
 
-      {/* Optional Discord-style footer */}
       <div className="text-gray-500 mt-12 text-sm">
         &copy; 2025 BakBak • Made with ❤️
       </div>
