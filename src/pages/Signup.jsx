@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Signup() {
   const [userName, setUserName] = useState("");
@@ -8,21 +9,29 @@ export default function Signup() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
+  const successToast = () => {
+    toast.success("Signup Successfull!!");
+    setTimeout(() => {
+      toast.success("Navigating to Signin...", { autoClose: 3000 });
+    }, 1000);
+  };
+
   const handleSubmit = (e) => {
-    console.log("first");
     e.preventDefault();
     axios
       .post("http://localhost:5000/api/signup", {
-        userName: userName,
-        email: email,
-        password: password,
+        userName,
+        email,
+        password,
       })
       .then((response) => {
-        console.log(response);
-        navigate("/signin");
+        successToast();
+        setTimeout(() => {
+          navigate("/signin");
+        }, 4000);
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response.data.errors);
       });
   };
 
@@ -32,8 +41,7 @@ export default function Signup() {
         <h2 className="text-2xl font-bold text-center mb-6 text-white">
           Create an account
         </h2>
-
-        <div className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label className="block text-sm font-medium text-gray-400 mb-1">
               Username
@@ -43,9 +51,7 @@ export default function Signup() {
               value={userName}
               placeholder="Enter your username"
               className="w-full px-4 py-2 rounded-md bg-[#40444b] text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onChange={(e) => {
-                setUserName(e.target.value);
-              }}
+              onChange={(e) => setUserName(e.target.value)}
             />
           </div>
 
@@ -58,9 +64,7 @@ export default function Signup() {
               value={email}
               placeholder="Enter your email"
               className="w-full px-4 py-2 rounded-md bg-[#40444b] text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
@@ -73,23 +77,17 @@ export default function Signup() {
               value={password}
               placeholder="Enter your password"
               className="w-full px-4 py-2 rounded-md bg-[#40444b] text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
           <button
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 transition"
-            // onSubmit={handleSubmit}
-            onClick={(e) => {
-              handleSubmit(e);
-            }}
           >
             Sign Up
           </button>
-        </div>
+        </form>
 
         <p className="text-sm text-center text-gray-400 mt-4">
           Already have an account?{" "}

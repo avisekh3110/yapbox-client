@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 export default function Navbar() {
   return (
-    <nav className="flex items-center justify-between bg-slate-700 text-white px-6 py-4 shadow-md w-full">
+    <nav className="flex items-center justify-between bg-amber-400 text-white px-6 py-4 shadow-md w-full">
       {/* Logo / Brand */}
       <div className="text-2xl font-bold tracking-wide">BAKBAK</div>
 

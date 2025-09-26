@@ -45,8 +45,7 @@ export default function () {
 
   return (
     <div className="flex justify-center items-center h-screen w-full min-h-screen bg-[#2f3136] flex-col text-gray-200">
-      <Navbar />
-      <div className="bg-[#36393f] p-6 shadow-lg gap-4 flex flex-col h-full w-full rounded-lg">
+      <div className="bg-[#36393f] p-6  gap-4 flex flex-col h-full w-full">
         <ConnectionState isConnected={isConnected} />
         <ConnectionManager />
 
