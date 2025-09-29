@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { socket } from "../socket";
 import { ConnectionState } from "../components/ConnectionState";
 import { ConnectionManager } from "../components/ConnectionManager";
-import Message from "../components/message";
+import Message from "../components/Message";
 
 export default function () {
   const [isConnected, setIsConnected] = useState(socket.connected);
