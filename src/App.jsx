@@ -1,11 +1,11 @@
 import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import NotFoundPage from "./pages/NotFoundPage";
 import Signup from "./pages/signup.jsx";
 import Signin from "./pages/signin.jsx";
 import Navbar from "./components/Navbar.jsx";
 import Footer from "./components/Footer.jsx";
 import Home from "./pages/Home.jsx";
+import NotFoundPage from "./pages/notFoundPage.jsx";
 
 export default function App() {
   return (

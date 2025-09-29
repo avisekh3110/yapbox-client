@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { socket } from "../socket";
 import { ConnectionState } from "../components/ConnectionState";
 import { ConnectionManager } from "../components/ConnectionManager";
-import Navbar from "../components/Navbar";
 import Message from "../components/message";
 
 export default function () {
@@ -36,7 +35,6 @@ export default function () {
   function onSubmit(event) {
     event.preventDefault();
     setIsLoading(true);
-
     socket.timeout(5000).emit("user-message", [value, socket.id], () => {
       setIsLoading(false);
     });
@@ -44,12 +42,12 @@ export default function () {
   }
 
   return (
-    <div className="flex justify-center items-center h-screen w-full min-h-screen bg-[#2f3136] flex-col text-gray-200">
-      <div className="bg-[#36393f] p-6  gap-4 flex flex-col h-full w-full">
+    <div className="flex justify-center items-center pt-20 h-screen w-full min-h-screen bg-secondary-b flex-col text-gray-200">
+      <div className="bg-secondary-b p-6  gap-4 flex flex-col h-full w-full">
         <ConnectionState isConnected={isConnected} />
         <ConnectionManager />
 
-        <div className="h-[77%] bg-[#2f3136] rounded-lg p-4 flex flex-col gap-3 overflow-y-auto">
+        <div className="h-[77%] bg-secondary-a rounded-lg p-4 flex flex-col gap-3 overflow-y-auto">
           {messages.map((element, index) => (
             <Message
               key={`${element}-${index}`}
@@ -62,7 +60,7 @@ export default function () {
 
         <form
           onSubmit={onSubmit}
-          className="flex gap-2 mt-2 bg-[#40444b] rounded-lg px-3 py-2"
+          className="flex gap-2 mt-2 bg-secondary-c rounded-lg px-3 py-2"
         >
           <input
             type="text"

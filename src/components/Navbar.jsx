@@ -1,22 +1,24 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 export default function Navbar() {
   return (
-    <nav className="flex items-center justify-between bg-amber-400 text-white px-6 py-4 shadow-md w-full">
+    <nav className="flex items-center justify-between place-self-center bg-primary-b text-white px-10 py-3 shadow-md w-24/25 absolute top-4 rounded-4xl">
       {/* Logo / Brand */}
-      <div className="text-2xl font-bold tracking-wide">BAKBAK</div>
+      <Link to={"/"} className="text-2xl font-bold tracking-wide">
+        YAPBOX
+      </Link>
 
       {/* Buttons */}
-      <div className="space-x-4">
+      <div className="gap-4 flex ">
         <NavLink
           to={"/signin"}
-          className="px-4 py-2 rounded-lg bg-gray-700 hover:bg-gray-600 transition"
+          className="px-6 py-2 flex justify-center items-center rounded-full bg-secondary-c hover:bg-secondary-a transition"
         >
           Login
         </NavLink>
         <NavLink
           to={"/signup"}
-          className="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-500 transition"
+          className="px-6 py-2 flex justify-center items-center rounded-full bg-primary-c hover:bg-primary-a transition ease-in"
         >
           Signup
         </NavLink>
