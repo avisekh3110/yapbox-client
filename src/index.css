@@ -1,11 +1,33 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap');
+
 @import "tailwindcss";
 
 @theme {
   --color-primary-a: #592913ff;
   --color-primary-b: #AD4B1D;
   --color-primary-c: #ed9d2dff;
-  --color-secondary-a: #2f3136;
-  --color-secondary-b: #40444f;
-  --color-secondary-c: #5f6368;
+  --color-secondary-a:  #999999;
+  --color-secondary-b:  #333333;
+  --color-secondary-c:  #111111;
+  --color-tertiary: #FFFFFF;
+  --font-itrishGrover:"Irish Grover", system-ui;
+} */
+
+@import url('https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-primary-a: #592913ff;
+  --color-primary-b: #AD4B1D;
+  --color-primary-c: #ed9d2dff;
+  --color-secondary-dark-a:  #999999;
+  --color-secondary-dark-b:  #333333;
+  --color-secondary-dark-c:  #111111;
+  --color-tertiary-dark: #FFFFFF;
+  --color-secondary-a: #808080;
+  --color-secondary-b: #cacaca;
+  --color-secondary-c: #ffffff;
   --color-tertiary: #000000;
+  --font-itrishGrover:"Irish Grover", system-ui;
 }

@@ -50,54 +50,54 @@ export default function Signup() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-secondary-a">
-      <div className="w-full max-w-md bg-secondary-b rounded-2xl shadow-xl p-8 text-gray-200">
-        <h2 className="text-2xl font-bold text-center mb-6 text-white">
+    <div className="w-full flex justify-center items-center">
+      <div className="w-full max-w-md bg-gradient-to-b to-secondary-c from-secondary-b rounded-2xl shadow-lg drop-shadow-xl shadow-secondary-b p-8 text-tertiary">
+        <h2 className="text-2xl font-bold text-center mb-6 text-tertiary">
           Create an account
         </h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-1">
+            <label className="block text-sm font-medium text-tertiary mb-1">
               Username
             </label>
             <input
               type="text"
               value={userName}
               placeholder="Enter your username"
-              className="w-full px-4 py-2 rounded-md bg-secondary-c text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 rounded-md bg-secondary-c ring-1 ring-secondary-b text-tertiary placeholder-secondary-a focus:outline-none focus:ring-2 focus:ring-primary-c"
               onChange={(e) => setUserName(e.target.value)}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-1">
+            <label className="block text-sm font-medium text-tertiary mb-1">
               Email
             </label>
             <input
               type="email"
               value={email}
               placeholder="Enter your email"
-              className="w-full px-4 py-2 rounded-md bg-secondary-c text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 rounded-md bg-secondary-c text-tertiary placeholder-secondary-a ring-1 ring-secondary-b focus:outline-none focus:ring-2 focus:ring-primary-c"
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-400 mb-1">
+            <label className="block text-sm font-medium text-tertiary mb-1">
               Password
             </label>
             <input
               type="password"
               value={password}
               placeholder="Enter your password"
-              className="w-full px-4 py-2 rounded-md bg-secondary-c text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-2 rounded-md bg-secondary-c text-tertiary placeholder-secondary-a ring-1 ring-secondary-b focus:outline-none focus:ring-2 focus:ring-primary-c"
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded-md font-semibold hover:bg-blue-700 disabled:bg-gray-500 transition"
+            className="w-full bg-blue-600 text-secto-secondary-c py-2 rounded-md font-semibold hover:bg-blue-700 disabled:bg-gray-500 transition"
             disabled={!password.trim() || !userName.trim() || !email.trim()}
           >
             Sign Up
