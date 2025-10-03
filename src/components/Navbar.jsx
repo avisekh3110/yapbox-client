@@ -1,28 +1,46 @@
 import { Link, NavLink } from "react-router-dom";
+import logo from "/logo.svg";
 
 export default function Navbar() {
   return (
-    <nav className="flex items-center justify-between place-self-center bg-primary-b text-white px-10 py-3 shadow-md w-24/25 absolute top-4 rounded-4xl">
-      {/* Logo / Brand */}
-      <Link to={"/"} className="text-2xl font-bold tracking-wide">
-        YAPBOX
-      </Link>
-
-      {/* Buttons */}
-      <div className="gap-4 flex ">
+    <div className="w-full h-14 absolute top-0 flex justify-between items-center py-8 px-6 sm:px-12 ">
+      <div className="flex gap-1 items-center h-full">
+        <img src={logo} width={30} height={30} />
+        <div className="text-lg font-bold text-primary-b">YAPBOX</div>
+      </div>
+      <div className=" hidden sm:flex gap-8 items-center h-full text-secondary-c">
         <NavLink
-          to={"/signin"}
-          className="px-6 py-2 flex justify-center items-center rounded-full bg-secondary-c hover:bg-secondary-a transition"
+          to="/"
+          className={({ isActive }) =>
+            `${isActive ? "border-b-2" : ""} text-sm font-medium`
+          }
         >
-          Login
+          HOME
         </NavLink>
+
         <NavLink
-          to={"/signup"}
-          className="px-6 py-2 flex justify-center items-center rounded-full bg-primary-c hover:bg-primary-a transition ease-in"
+          to="/about"
+          className={({ isActive }) =>
+            `${isActive ? "border-b-2" : ""} text-sm font-medium`
+          }
         >
-          Signup
+          ABOUT US
         </NavLink>
       </div>
-    </nav>
+      <div className="flex gap-4 items-center">
+        <NavLink
+          to={"/signin"}
+          className={`text-sm font-semibold tracking-wide bg-primary-b hover:bg-white hover:text-primary-b ring-1 ring-primary-b text-white rounded-sm py-1 px-4 transition`}
+        >
+          SIGNIN
+        </NavLink>
+        <NavLink
+          to={"/signin"}
+          className="text-sm hidden sm:flex font-medium px-4 py-1 rounded-sm ring-1 ring-primary-c hover:bg-primary-c hover:text-white ease-out transition"
+        >
+          SIGNUP
+        </NavLink>
+      </div>
+    </div>
   );
 }
