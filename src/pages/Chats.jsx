@@ -4,7 +4,7 @@ import { ConnectionState } from "../components/ConnectionState";
 import { ConnectionManager } from "../components/ConnectionManager";
 import Message from "../components/Message";
 
-export default function () {
+export default function Chats() {
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [messages, setmessages] = useState([]);
   const [value, setValue] = useState("");
@@ -42,41 +42,39 @@ export default function () {
   }
 
   return (
-    <div className="flex justify-center items-center pt-20 h-screen w-full min-h-screen bg-secondary-b flex-col text-gray-200">
-      <div className="bg-secondary-b p-6  gap-4 flex flex-col h-full w-full">
-        <ConnectionState isConnected={isConnected} />
-        <ConnectionManager />
+    <div className="bg-secondary-b p-6  gap-4 flex flex-col h-8/10 w-[95%] rounded-lg">
+      <ConnectionState isConnected={isConnected} />
+      <ConnectionManager />
 
-        <div className="h-[77%] bg-secondary-a rounded-lg p-4 flex flex-col gap-3 overflow-y-auto">
-          {messages.map((element, index) => (
-            <Message
-              key={`${element}-${index}`}
-              element={element}
-              index={index}
-              socketid={socket.id}
-            />
-          ))}
-        </div>
-
-        <form
-          onSubmit={onSubmit}
-          className="flex gap-2 mt-2 bg-secondary-c rounded-lg px-3 py-2"
-        >
-          <input
-            type="text"
-            className="flex-1 bg-transparent focus:outline-none text-gray-200 placeholder-gray-400"
-            placeholder="Message #general"
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
+      <div className="h-[77%] bg-secondary-a rounded-lg p-4 flex flex-col gap-3 overflow-y-auto">
+        {messages.map((element, index) => (
+          <Message
+            key={`${element}-${index}`}
+            element={element}
+            index={index}
+            socketid={socket.id}
           />
-          <button
-            className="px-5 py-2 bg-blue-600 text-white rounded font-semibold hover:bg-blue-700 disabled:opacity-50"
-            disabled={isLoading || !value.trim()}
-          >
-            SEND
-          </button>
-        </form>
+        ))}
       </div>
+
+      <form
+        onSubmit={onSubmit}
+        className="flex gap-2 mt-2 bg-secondary-c rounded-lg px-3 py-2"
+      >
+        <input
+          type="text"
+          className="flex-1 bg-transparent focus:outline-none text-gray-200 placeholder-gray-400"
+          placeholder="Message #general"
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+        />
+        <button
+          className="px-5 py-2 bg-blue-600 text-white rounded font-semibold hover:bg-blue-700 disabled:opacity-50"
+          disabled={isLoading || !value.trim()}
+        >
+          SEND
+        </button>
+      </form>
     </div>
   );
 }

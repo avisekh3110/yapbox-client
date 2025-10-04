@@ -1,13 +1,16 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { LocalPort } from "../const";
+import { ThemeContext } from "../context/ThemeContext";
 
 export default function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const { darkMode } = useContext(ThemeContext);
 
   const noUserToast = () => {
     toast.error("No such user found!!");
@@ -55,12 +58,22 @@ export default function Signin() {
 
   return (
     <div className="w-full flex justify-center items-center">
-      <div className="w-full max-w-md bg-gradient-to-b via-secondary-c to-secondary-c  from-secondary-b rounded-2xl shadow-lg drop-shadow-2xl shadow-secondary-b p-8 text-tertiary">
+      <div
+        className={`w-full max-w-md bg-gradient-to-bl ${
+          darkMode
+            ? "via-secondary-dark-c to-secondary-dark-c  from-secondary-dark-b shadow-secondary-dark-b p-8 text-tertiary-dark"
+            : "via-secondary-c to-secondary-c  from-secondary-b shadow-secondary-b p-8 text-tertiary"
+        } rounded-2xl shadow-lg drop-shadow-2xl `}
+      >
         <h2 className="text-2xl font-bold text-center mb-6">Welcome Back!</h2>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-sm font-medium text-tertiary mb-1">
+            <label
+              className={`block text-sm font-medium ${
+                darkMode ? "text-tertiary-dark" : "text-tertiary"
+              } mb-1`}
+            >
               Email
             </label>
             <input
@@ -68,7 +81,11 @@ export default function Signin() {
               value={email}
               required
               placeholder="Enter your email"
-              className="w-full px-4 py-2 rounded-md bg-secondary-c ring-1 ring-secondary-b text-tertiary placeholder-secondary-a focus:outline-none focus:ring-2 focus:ring-primary-c"
+              className={`w-full px-4 py-2 rounded-md ring-1 focus:outline-none focus:ring-2 focus:ring-primary-c transition${
+                darkMode
+                  ? "bg-secondary-dark-b ring-secondary-dark-a text-tertiary-dark placeholder-secondary-dark-a"
+                  : "bg-secondary-c ring-secondary-b text-tertiary placeholder-secondary-a"
+              }`}
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
@@ -76,7 +93,11 @@ export default function Signin() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-tertiary mb-1">
+            <label
+              className={`block text-sm font-medium ${
+                darkMode ? "text-tertiary-dark" : "text-tertiary"
+              } mb-1`}
+            >
               Password
             </label>
             <input
@@ -84,7 +105,11 @@ export default function Signin() {
               value={password}
               required
               placeholder="Enter your password"
-              className="w-full px-4 py-2 rounded-md bg-secondary-c ring-1 ring-secondary-b text-tertiary placeholder-secondary-a focus:outline-none focus:ring-2 focus:ring-primary-c"
+              className={`w-full px-4 py-2 rounded-md ring-1 focus:outline-none focus:ring-2 focus:ring-primary-c transition${
+                darkMode
+                  ? "bg-secondary-dark-b ring-secondary-dark-a text-tertiary-dark placeholder-secondary-dark-a"
+                  : "bg-secondary-c ring-secondary-b text-tertiary placeholder-secondary-a"
+              }`}
               onChange={(e) => {
                 setPassword(e.target.value);
               }}

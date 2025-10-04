@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Signup from "./pages/Signup.jsx";
 import Signin from "./pages/Signin.jsx";
 import Footer from "./components/Footer.jsx";
-// import CHAt from "./pages/Chats.jsx";
+import Chats from "./pages/Chats.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 import HOME from "./pages/home.jsx";
 import Navbar from "./components/navbar.jsx";
@@ -17,13 +17,14 @@ export default function App() {
         <div
           className={`flex lg:w-2/3 w-11/12 h-10/12 rounded-xl ${
             darkMode ? "bg-secondary-dark-c" : "bg-secondary-c"
-          }  justify-between items-center shadow-2xl drop-shadow-2xl shadow-grap-500 relative`}
+          }  justify-center items-center shadow-2xl drop-shadow-2xl shadow-grap-500 relative`}
         >
           <Navbar />
           <Routes>
             <Route path="/" element={<HOME />} />
             <Route path="*" element={<NotFoundPage />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/chats" element={<Chats />} />
             <Route path="/signin" element={<Signin />} />
           </Routes>
           <Footer />
@@ -32,3 +33,30 @@ export default function App() {
     </BrowserRouter>
   );
 }
+
+// import React, { useState } from "react";
+
+// export default function App() {
+//   const [text, setText] = useState("");
+
+//   return (
+//     <div>
+//       <div>
+//         <input
+//           type="text"
+//           value={text}
+//           onChange={(e) => {
+//             setText(e.target.value);
+//           }}
+//         />
+//         <button
+//           onClick={() => {
+//             console.log(text);
+//           }}
+//         >
+//           CLICK
+//         </button>
+//       </div>
+//     </div>
+//   );
+// }

@@ -2,9 +2,12 @@ import { Link, NavLink } from "react-router-dom";
 import logo from "/logo.svg";
 import { useContext } from "react";
 import { ThemeContext } from "../context/ThemeContext";
+import { IsLoggedinContext } from "../context/IsLoggedinContext.jsx";
 
 export default function Navbar() {
   const { darkMode } = useContext(ThemeContext);
+  const { isLoggedin } = useContext(IsLoggedinContext);
+  console.log(isLoggedin);
   return (
     <div className="w-full h-14 absolute top-0 flex justify-between items-center py-10 px-6 sm:px-12 ">
       <NavLink to={"/"} className="flex gap-1 items-center h-full">
@@ -30,22 +33,33 @@ export default function Navbar() {
           ABOUT US
         </NavLink>
       </div>
-      <div className="flex gap-4 items-center">
-        <NavLink
-          to={"/signin"}
-          className={`text-sm font-semibold tracking-wide bg-primary-b hover:bg-transparent hover:text-primary-b ring-1 ring-primary-b text-white rounded-sm py-1 px-4 transition`}
+      {isLoggedin ? (
+        <div
+          className={`text-md font-semibold tracking-wide bg-primary-b text-white flex justify-between gap-2 items-center rounded-full py-1 px-1 pr-3 transition`}
         >
-          SIGNIN
-        </NavLink>
-        <NavLink
-          to={"/signup"}
-          className={`text-sm hidden sm:flex font-medium px-4 py-1 rounded-sm ring-1 ring-primary-c ${
-            darkMode ? "text-tertiary-dark" : "text-tertiary"
-          } hover:bg-primary-c hover:text-secondary-c ease-out transition`}
-        >
-          SIGNUP
-        </NavLink>
-      </div>
+          <div
+            className={`w-7 h-7 bg-secondary-c ring-1 ring-primary-b hover:bg-transparent rounded-full`}
+          ></div>
+          <div>Avisekh</div>
+        </div>
+      ) : (
+        <div className="flex gap-4 items-center">
+          <NavLink
+            to={"/signin"}
+            className={`text-sm font-semibold tracking-wide bg-primary-b hover:bg-transparent hover:text-primary-b ring-1 ring-primary-b text-white rounded-sm py-1 px-4 transition`}
+          >
+            SIGNIN
+          </NavLink>
+          <NavLink
+            to={"/signup"}
+            className={`text-sm hidden sm:flex font-medium px-4 py-1 rounded-sm ring-1 ring-primary-c ${
+              darkMode ? "text-tertiary-dark" : "text-tertiary"
+            } hover:bg-primary-c hover:text-secondary-c ease-out transition`}
+          >
+            SIGNUP
+          </NavLink>
+        </div>
+      )}
     </div>
   );
 }
