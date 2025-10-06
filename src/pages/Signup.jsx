@@ -9,6 +9,7 @@ export default function Signup() {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const { darkMode } = useContext(ThemeContext);
 
@@ -33,6 +34,7 @@ export default function Signup() {
 
   //submission/post resquest
   const handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
     axios
       .post(`${LocalPort}/api/signup`, {
@@ -42,11 +44,13 @@ export default function Signup() {
       })
       .then((response) => {
         successToast();
+        setLoading(false);
         setTimeout(() => {
           navigate("/signin");
         }, 4000);
       })
       .catch((err) => {
+        setLoading(false);
         if (err.response?.status == 400) {
           const errors = JSON.parse(err.response.data.errors);
           errors.map((e) => {
@@ -137,10 +141,12 @@ export default function Signup() {
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-secto-secondary-c py-2 rounded-md font-semibold hover:bg-blue-700 disabled:bg-gray-500 transition"
+            className={`w-full ${
+              loading ? "bg-blue-700" : "bg-blue-600"
+            } text-secondary-c py-2 rounded-md font-semibold hover:bg-blue-700 disabled:bg-gray-500 transition`}
             disabled={!password.trim() || !userName.trim() || !email.trim()}
           >
-            Sign Up
+            {loading ? "loading..." : "Sign Up"}
           </button>
         </form>
 

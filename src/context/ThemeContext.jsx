@@ -5,14 +5,9 @@ export const ThemeContext = createContext();
 
 // Provider component
 export function ThemeProvider({ children }) {
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(true);
 
   const toggleTheme = () => setDarkMode((prev) => !prev);
-
-  const logginUer = () => {
-    setUser(response.data);
-    if (!isLoggedin) toggleLogin();
-  };
 
   return (
     <ThemeContext.Provider value={{ darkMode, toggleTheme }}>

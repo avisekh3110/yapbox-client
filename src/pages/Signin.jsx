@@ -10,6 +10,7 @@ import { IsLoggedinContext } from "../context/IsLoggedinContext";
 export default function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const { darkMode } = useContext(ThemeContext);
   const { logginUser } = useContext(IsLoggedinContext);
@@ -29,6 +30,7 @@ export default function Signin() {
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
+    setLoading(true);
     e.preventDefault();
     axios
       .post(
@@ -41,12 +43,14 @@ export default function Signin() {
       )
       .then((response) => {
         if (response) {
+          setLoading(false);
           logginUser(response.data);
           navigate("/");
           loggedInToast();
         }
       })
       .catch((err) => {
+        setLoading(false);
         if (!err.response) {
           errorToast("Network error. Please try again later.");
           setPassword("");
@@ -133,10 +137,12 @@ export default function Signin() {
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-secondary-c py-2 rounded-md font-semibold hover:bg-blue-700 disabled:bg-gray-500 transition "
+            className={`w-full ${
+              loading ? "bg-blue-700" : "bg-blue-600"
+            } text-secondary-c py-2 rounded-md font-semibold hover:bg-blue-700 disabled:bg-gray-500 transition`}
             disabled={!email.trim() || !password.trim()}
           >
-            Login
+            {loading ? "Loading..." : "Login"}
           </button>
         </form>
 
