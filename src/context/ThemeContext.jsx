@@ -9,6 +9,11 @@ export function ThemeProvider({ children }) {
 
   const toggleTheme = () => setDarkMode((prev) => !prev);
 
+  const logginUer = () => {
+    setUser(response.data);
+    if (!isLoggedin) toggleLogin();
+  };
+
   return (
     <ThemeContext.Provider value={{ darkMode, toggleTheme }}>
       {children}

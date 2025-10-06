@@ -1,16 +1,18 @@
 import axios from "axios";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { LocalPort } from "../const";
 import { ThemeContext } from "../context/ThemeContext";
+import { IsLoggedinContext } from "../context/IsLoggedinContext";
 
 export default function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const { darkMode } = useContext(ThemeContext);
+  const { logginUser } = useContext(IsLoggedinContext);
 
   const noUserToast = () => {
     toast.error("No such user found!!");
@@ -18,6 +20,10 @@ export default function Signin() {
 
   const errorToast = (message) => {
     toast.error(message);
+  };
+
+  const loggedInToast = () => {
+    toast.success("Login Successfully");
   };
 
   const navigate = useNavigate();
@@ -34,14 +40,18 @@ export default function Signin() {
         { withCredentials: true }
       )
       .then((response) => {
-        console.log("response :", response.data);
+        if (response) {
+          logginUser(response.data);
+          navigate("/");
+          loggedInToast();
+        }
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         //User not found
-        err.response.status == 404 && noUserToast();
+        err.response?.status == 404 && noUserToast();
         //Validation error
-        if (err.response.status == 400) {
+        if (err.response?.status == 400) {
           const errors = JSON.parse(err.response.data);
           console.log(errors);
           errors.map((e) => {

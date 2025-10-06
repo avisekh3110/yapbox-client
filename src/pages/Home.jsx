@@ -9,9 +9,9 @@ export default function HOME() {
   const { darkMode } = useContext(ThemeContext);
   const { isLoggedin } = useContext(IsLoggedinContext);
   return (
-    <div className={`w-full`}>
+    <div className={`w-full h-10/13 flex gap-4`}>
       <div
-        className={`h-full w-full flex justify-center items-start rounded-r-xl flex-col p-10 sm:p-20`}
+        className={`h-full w-full lg:w-1/2 flex justify-center items-start rounded-r-xl flex-col p-10 sm:p-20`}
       >
         <div
           className={`flex flex-col font-black text-3xl sm:text-5xl ${
@@ -53,8 +53,13 @@ export default function HOME() {
         )}
       </div>
       <div
-        className={`h-full w-1/2 bg-gray-200 rounded-r-xl hidden lg:flex`}
-      ></div>
+        className={`hidden lg:flex w-1/2 h-full  items-center justify-end pr-10 sm:pr-20`}
+      >
+        <div
+          className={`w-full h-96 rounded-lg bg-secondary-dark-b
+            `}
+        ></div>
+      </div>
     </div>
   );
 }
