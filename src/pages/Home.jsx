@@ -1,7 +1,5 @@
 import React, { useContext } from "react";
-import Navbar from "../components/navbar";
 import { NavLink } from "react-router-dom";
-import Footer from "../components/Footer";
 import { ThemeContext } from "../context/ThemeContext";
 import { IsLoggedinContext } from "../context/IsLoggedinContext";
 

@@ -6,7 +6,7 @@ import Footer from "./components/Footer.jsx";
 import Chats from "./pages/Chats.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 import HOME from "./pages/Home.jsx";
-import Navbar from "./components/navbar.jsx";
+import Navbar from "./components/Navbar.jsx";
 import { ThemeContext } from "./context/ThemeContext.jsx";
 import axios from "axios";
 import { LocalPort } from "./const.js";
