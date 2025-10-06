@@ -31,7 +31,7 @@ export default function Signup() {
   const handleSubmit = (e) => {
     e.preventDefault();
     axios
-      .post(`http://${LocalPort}:5000/api/signup`, {
+      .post(`${LocalPort}/api/signup`, {
         userName,
         email,
         password,

@@ -20,11 +20,7 @@ export default function App() {
 
   useEffect(() => {
     axios
-      .post(
-        `http://${LocalPort}:5000/api/refresh`,
-        {},
-        { withCredentials: true }
-      )
+      .post(`${LocalPort}/api/refresh`, {}, { withCredentials: true })
       .then((response) => {
         if (response?.data) {
           logginUser(response.data);
