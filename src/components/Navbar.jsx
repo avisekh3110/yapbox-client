@@ -1,4 +1,4 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "/logo.svg";
 import { useContext, useState } from "react";
 import { ThemeContext } from "../context/ThemeContext";
@@ -10,6 +10,8 @@ export default function Navbar() {
   const { darkMode } = useContext(ThemeContext);
   const { isLoggedin, user, toggleLogin } = useContext(IsLoggedinContext);
   const [logged, setLogged] = useState(true);
+
+  const navigate = useNavigate();
 
   return (
     <div className="w-full h-14 absolute top-0 flex justify-between items-center py-10 px-6 sm:px-12 ">
@@ -43,6 +45,7 @@ export default function Navbar() {
             setTimeout(() => {
               toggleLogin();
               setLogged((prev) => !prev);
+              navigate("/");
             }, 500);
           }}
           className={`text-md relative font-semibold tracking-wide bg-primary-b text-white flex justify-between gap-2 items-center rounded-full py-1 px-1 transition duration-300 cursor-pointer ${

@@ -50,14 +50,14 @@ export default function HOME() {
           </NavLink>
         )}
       </div>
-      <div
+      {/* <div
         className={`hidden lg:flex w-1/2 h-full  items-center justify-end pr-10 sm:pr-20`}
       >
         <div
           className={`w-full h-96 rounded-lg bg-secondary-dark-b
             `}
         ></div>
-      </div>
+      </div> */}
     </div>
   );
 }
