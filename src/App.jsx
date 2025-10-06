@@ -5,7 +5,7 @@ import Signin from "./pages/Signin.jsx";
 import Footer from "./components/Footer.jsx";
 import Chats from "./pages/Chats.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
-import HOME from "./pages/home.jsx";
+import HOME from "./pages/Home.jsx";
 import Navbar from "./components/navbar.jsx";
 import { ThemeContext } from "./context/ThemeContext.jsx";
 import axios from "axios";
