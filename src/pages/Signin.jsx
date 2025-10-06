@@ -47,7 +47,11 @@ export default function Signin() {
         }
       })
       .catch((err) => {
-        // console.log(err);
+        if (!err.response) {
+          errorToast("Network error. Please try again later.");
+          setPassword("");
+          return;
+        }
         //User not found
         err.response?.status == 404 && noUserToast();
         //Validation error
@@ -56,6 +60,7 @@ export default function Signin() {
           console.log(errors);
           errors.map((e) => {
             errorToast(e.message);
+            setPassword("");
           });
         }
         //Bad Credentials

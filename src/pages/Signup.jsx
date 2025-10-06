@@ -27,6 +27,10 @@ export default function Signup() {
     toast.error(message);
   };
 
+  const ExsitError = (message) => {
+    toast.error(message);
+  };
+
   //submission/post resquest
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -48,6 +52,9 @@ export default function Signup() {
           errors.map((e) => {
             validErrToast(e.message);
           });
+        }
+        if (err.response?.status == 409) {
+          ExsitError(err.response.data);
         }
       });
   };

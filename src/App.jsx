@@ -1,5 +1,5 @@
-import React, { useContext, useEffect } from "react";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Signup from "./pages/Signup.jsx";
 import Signin from "./pages/Signin.jsx";
 import Footer from "./components/Footer.jsx";
@@ -27,7 +27,7 @@ export default function App() {
         }
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
         if (err.response?.status == 401) {
           navigate("/");
         }
