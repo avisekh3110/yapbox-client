@@ -6,11 +6,14 @@ import { toast } from "react-toastify";
 import { LocalPort } from "../const";
 import { ThemeContext } from "../context/ThemeContext";
 import { IsLoggedinContext } from "../context/IsLoggedinContext";
+import openEye from "/open.svg";
+import closeEye from "/close.svg";
 
 export default function Signin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPass, setShowPass] = useState(false);
 
   const { darkMode } = useContext(ThemeContext);
   const { logginUser } = useContext(IsLoggedinContext);
@@ -119,20 +122,34 @@ export default function Signin() {
             >
               Password
             </label>
-            <input
-              type="password"
-              value={password}
-              required
-              placeholder="Enter your password"
-              className={`w-full px-4 py-2 rounded-md ring-1 focus:outline-none focus:ring-2 focus:ring-primary-c transition${
-                darkMode
-                  ? "bg-secondary-dark-b ring-secondary-dark-a text-tertiary-dark placeholder-secondary-dark-a"
-                  : "bg-secondary-c ring-secondary-b text-tertiary placeholder-secondary-a"
+            <div
+              className={`flex items-center justify-between rounded-md ring-1 ${
+                darkMode ? "ring-secondary-dark-a" : "ring-secondary-b"
               }`}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
+            >
+              <input
+                type={showPass ? "text" : "password"}
+                value={password}
+                required
+                placeholder="Enter your password"
+                className={`w-full px-4 py-2 rounded-l-md focus:outline-none focus:ring-2 focus:ring-primary-c transition bg-transparent ${
+                  darkMode
+                    ? " text-tertiary-dark placeholder-secondary-dark-a"
+                    : " text-tertiary placeholder-secondary-a"
+                }`}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                }}
+              />
+              <div
+                className="h-full w-10 bg-transparent flex items-center justify-center cursor-pointer"
+                onClick={() => {
+                  setShowPass(!showPass);
+                }}
+              >
+                <img src={showPass ? closeEye : openEye} width={20} alt="" />
+              </div>
+            </div>
           </div>
 
           <button
