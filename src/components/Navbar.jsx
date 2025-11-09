@@ -8,13 +8,13 @@ import logout from "/logout.svg";
 
 export default function Navbar() {
   const { darkMode } = useContext(ThemeContext);
-  const { isLoggedin, user, toggleLogin } = useContext(IsLoggedinContext);
+  const { isLoggedin, user, loggoutUser } = useContext(IsLoggedinContext);
   const [logged, setLogged] = useState(true);
 
   const navigate = useNavigate();
 
   return (
-    <div className="w-full h-14 absolute top-0 flex justify-between items-center py-10 px-6 sm:px-12 ">
+    <div className="w-full h-20 absolute top-0 flex justify-between items-center py-4 px-6 sm:px-12 ">
       <NavLink to={"/"} className="flex gap-1 items-center h-full">
         <img src={logo} width={35} height={35} />
         <div className="text-xl font-bold text-primary-b">YAPBOX</div>
@@ -43,7 +43,7 @@ export default function Navbar() {
           onClick={() => {
             setLogged((prev) => !prev);
             setTimeout(() => {
-              toggleLogin();
+              loggoutUser();
               setLogged((prev) => !prev);
               navigate("/");
             }, 500);

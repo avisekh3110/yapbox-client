@@ -1,30 +1,32 @@
 import React, { useState } from "react";
 import { createContext } from "react";
+import { useCookies } from "react-cookie";
 
 export const IsLoggedinContext = createContext();
 
 export function IsLoggedinProvider({ children }) {
-  const [isLoggedin, setIsLoggedin] = useState(false);
+  const [cookies, setCookie, removeCookie] = useCookies("uid");
+
   const [user, setUser] = useState({});
-  const toggleLogin = () => {
-    setIsLoggedin((prev) => !prev);
-  };
+  const [isLoggedin, setIsLoggedin] = useState(false);
 
   const logginUser = (userData) => {
     setUser(userData);
     setIsLoggedin(true);
+    const incomingCookie = document.cookie.split("=")[1];
+    setCookie("uid", incomingCookie);
   };
 
   const loggoutUser = () => {
-    setUser(userData);
+    setUser({});
     setIsLoggedin(false);
+    removeCookie("uid");
   };
 
   return (
     <IsLoggedinContext.Provider
       value={{
         isLoggedin,
-        toggleLogin,
         user,
         setUser,
         logginUser,

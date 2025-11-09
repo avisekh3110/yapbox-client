@@ -16,7 +16,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Irish+Grover&display=swap');
 
 @import "tailwindcss";
-
 @theme {
   --color-primary-a: #592913ff;
   --color-primary-b: #AD4B1D;
@@ -30,4 +29,14 @@
   --color-secondary-c: #ffffff;
   --color-tertiary: #000000;
   --font-itrishGrover:"Irish Grover", system-ui;
+}
+
+.hide-scrollbar {
+  overflow-y: scroll;       /* Enables vertical scrolling */
+  scrollbar-width: none;    /* For Firefox */
+}
+
+/* For Chrome, Safari, and Edge */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
 }

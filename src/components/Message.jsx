@@ -1,5 +1,5 @@
-export default function Message({ element, index, socketid }) {
-  const isMe = element[1] === socketid;
+export default function Message({ element, index, username }) {
+  const isMe = element[1] === username;
 
   return (
     <div
@@ -8,7 +8,7 @@ export default function Message({ element, index, socketid }) {
       } group relative`}
     >
       <div
-        className={`rounded-2xl px-4 py-2 max-w-[70%] shadow-sm 
+        className={`rounded-lg px-4 py-2 max-w-[70%] shadow-sm 
           ${
             isMe
               ? "bg-gradient-to-br from-blue-500 to-blue-600 text-white"

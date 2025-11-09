@@ -4,10 +4,14 @@ import { ConnectionState } from "../components/ConnectionState";
 import { ConnectionManager } from "../components/ConnectionManager";
 import Message from "../components/Message";
 import { ThemeContext } from "../context/ThemeContext";
+import { IsLoggedinContext } from "../context/IsLoggedinContext.jsx";
+import { useRef } from "react";
+import vclogo from "/vclogo.svg";
+import aclogo from "/aclogo.svg";
 
 export default function Chats() {
   const { darkMode } = useContext(ThemeContext);
-
+  const { user } = useContext(IsLoggedinContext);
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [messages, setMessages] = useState([]);
   const [value, setValue] = useState("");
@@ -42,57 +46,75 @@ export default function Chats() {
     if (!value.trim()) return;
 
     setIsLoading(true);
-    socket.timeout(5000).emit("user-message", [value, socket.id], () => {
+    socket.timeout(5000).emit("user-message", [value, user?.username], () => {
       setIsLoading(false);
     });
     setValue("");
   }
 
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   return (
     <div
-      className={`p-6 gap-4 flex flex-col h-8/10 w-[95%] rounded-lg ${
+      className={`w-[95%] h-[80%] p-2 flex flex-col rounded-md ${
         darkMode
-          ? "bg-secondary-dark-c text-tertiary-dark"
+          ? "bg-secondary-dark-b text-tertiary-dark"
           : "bg-secondary-b text-tertiary"
       }`}
     >
-      <ConnectionState isConnected={isConnected} />
-      <ConnectionManager />
+      {/* <ConnectionState isConnected={isConnected} />
+      <ConnectionManager /> */}
 
+      <div className="h-14 flex justify-between items-center ">
+        <div className="px-6 font-medium bg-secondary-dark-c w-10/12 h-full flex justify-start items-center rounded-sm">
+          WORLD CHAT
+        </div>
+        <div className="flex w-28 h-full justify-between items-center rounded-sm px-5 bg-white">
+          <button className="cursor-pointer">
+            <img className="h-7 " src={vclogo} alt="videocall" />
+          </button>
+          <button>
+            <img className="h-7" src={aclogo} alt="audiocall" />
+          </button>
+        </div>
+      </div>
       <div
-        className={`h-[77%] rounded-lg p-4 flex flex-col gap-3 overflow-y-auto ${
-          darkMode ? "bg-secondary-dark-b" : "bg-secondary-a"
-        }`}
+        className={`h-full w-full flex flex-col gap-3 mt-2 overflow-y-auto rounded-sm hide-scrollbar bg-transparent`}
       >
         {messages.map((element, index) => (
           <Message
             key={`${element}-${index}`}
             element={element}
             index={index}
-            socketid={socket.id}
+            username={user.username}
           />
         ))}
+        <div ref={messagesEndRef} />
       </div>
 
       <form
         onSubmit={onSubmit}
-        className={`flex gap-2 mt-2 rounded-lg px-3 py-2 ${
-          darkMode ? "bg-secondary-dark-b" : "bg-secondary-c"
+        className={`flex gap-2 mt-2 rounded-sm px-3 py-2 ${
+          darkMode ? "bg-secondary-dark-c" : "bg-tertiary-dark"
         }`}
       >
         <input
           type="text"
-          className={`flex-1 bg-transparent focus:outline-none ${
+          className={`flex-1 bg-transparent focus:outline-none  ${
             darkMode
               ? "text-tertiary-dark placeholder-gray-400"
-              : "text-tertiary placeholder-gray-500"
+              : "text-tertiary placeholder-gray-900"
           }`}
           placeholder="Message #general"
           value={value}
           onChange={(e) => setValue(e.target.value)}
         />
         <button
-          className="px-5 py-2 bg-primary-b text-tertiary-dark rounded font-semibold hover:bg-primary-c disabled:opacity-50"
+          className="px-5 py-2 bg-primary-b text-tertiary-dark rounded-sm font-semibold hover:bg-primary-c disabled:opacity-50"
           disabled={isLoading || !value.trim()}
         >
           SEND

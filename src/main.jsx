@@ -6,15 +6,18 @@ import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "./context/ThemeContext.jsx";
 import { IsLoggedinProvider } from "./context/IsLoggedinContext.jsx";
 import { BrowserRouter } from "react-router-dom";
+import { CookiesProvider } from "react-cookie";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <BrowserRouter>
       <ThemeProvider>
-        <IsLoggedinProvider>
-          <App />
-          <ToastContainer theme="dark" />
-        </IsLoggedinProvider>
+        <CookiesProvider>
+          <IsLoggedinProvider>
+            <App />
+            <ToastContainer theme="dark" />
+          </IsLoggedinProvider>
+        </CookiesProvider>
       </ThemeProvider>
     </BrowserRouter>
   </StrictMode>

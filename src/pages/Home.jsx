@@ -7,7 +7,7 @@ export default function HOME() {
   const { darkMode } = useContext(ThemeContext);
   const { isLoggedin } = useContext(IsLoggedinContext);
   return (
-    <div className={`w-full h-10/13 flex gap-4`}>
+    <div className={`w-full h-full flex gap-4`}>
       <div
         className={`h-full w-full lg:w-1/2 flex justify-center items-start rounded-r-xl flex-col p-10 sm:p-20`}
       >
