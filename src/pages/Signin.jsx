@@ -64,14 +64,14 @@ export default function Signin() {
         console.log(err.response.status);
         err.response?.status == 404 && noUserToast();
         //Validation error
-        if (err.response?.status == 400) {
-          const errors = JSON.parse(err.response.data);
-          console.log(errors);
-          errors.map((e) => {
+        if (err.response?.status === 400) {
+          const errors = err.response.data.errors || [];
+          errors.forEach((e) => {
             errorToast(e.message);
-            setPassword("");
           });
+          setPassword("");
         }
+
         //Bad Credentials
         if (err.response?.status === 401) {
           errorToast(err.response.data);
