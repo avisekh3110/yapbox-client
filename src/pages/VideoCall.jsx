@@ -216,7 +216,10 @@ function VideoCall() {
             CALL
           </button>
         )}
-        <button className="h-[90%] flex items-center justify-center bg-gray-500 px-6 rounded-sm font-semibold">
+        <button
+          onClick={sendStream}
+          className="h-[90%] flex items-center justify-center bg-gray-500 px-6 rounded-sm font-semibold"
+        >
           VIDEO
         </button>
       </div>
