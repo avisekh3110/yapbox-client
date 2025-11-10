@@ -1,15 +1,17 @@
 import { useEffect, useState, useContext } from "react";
-import { socket } from "../socket";
 import { ConnectionState } from "../components/ConnectionState";
 import { ConnectionManager } from "../components/ConnectionManager";
 import Message from "../components/Message";
-import { ThemeContext } from "../context/ThemeContext";
-import { IsLoggedinContext } from "../context/IsLoggedinContext.jsx";
+import { ThemeContext } from "../context/ThemeProvider.jsx";
+import { IsLoggedinContext } from "../context/IsLoggedinProvider.jsx";
 import { useRef } from "react";
 import vclogo from "/vclogo.svg";
 import aclogo from "/aclogo.svg";
+import { Link } from "react-router-dom";
+import { useSocket } from "../context/SocketProvider.jsx";
 
 export default function Chats() {
+  const socket = useSocket();
   const { darkMode } = useContext(ThemeContext);
   const { user } = useContext(IsLoggedinContext);
   const [isConnected, setIsConnected] = useState(socket.connected);
@@ -69,14 +71,14 @@ export default function Chats() {
       {/* <ConnectionState isConnected={isConnected} />
       <ConnectionManager /> */}
 
-      <div className="h-14 flex justify-between items-center ">
-        <div className="px-6 font-medium bg-secondary-dark-c w-10/12 h-full flex justify-start items-center rounded-sm">
+      <div className="h-14 flex justify-between items-center gap-2">
+        <div className="px-6 font-medium bg-secondary-dark-c w-[85%] h-full flex justify-start items-center rounded-sm">
           WORLD CHAT
         </div>
-        <div className="flex w-28 h-full justify-between items-center rounded-sm px-5 bg-white">
-          <button className="cursor-pointer">
+        <div className="flex w-[15%] h-full justify-between items-center rounded-sm px-5 gap-2 bg-white">
+          <Link to={"/videocall"} className="cursor-pointer">
             <img className="h-7 " src={vclogo} alt="videocall" />
-          </button>
+          </Link>
           <button>
             <img className="h-7" src={aclogo} alt="audiocall" />
           </button>

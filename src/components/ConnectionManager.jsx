@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { socket } from "../socket";
+import { useSocket } from "../context/SocketProvider";
 
 export function ConnectionManager() {
+  const socket = useSocket();
   const [isConnected, setIsConnected] = useState(socket.connected);
 
   useEffect(() => {

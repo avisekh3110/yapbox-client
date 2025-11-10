@@ -1,8 +1,8 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import logo from "/logo.svg";
 import { useContext, useState } from "react";
-import { ThemeContext } from "../context/ThemeContext";
-import { IsLoggedinContext } from "../context/IsLoggedinContext.jsx";
+import { ThemeContext } from "../context/ThemeProvider.jsx";
+import { IsLoggedinContext } from "../context/IsLoggedinProvider.jsx";
 
 import logout from "/logout.svg";
 

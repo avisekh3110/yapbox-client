@@ -1,7 +1,8 @@
 import React from "react";
-import { socket } from "../socket";
+import { useSocket } from "../context/SocketProvider";
 
 export function ConnectionState({ isConnected }) {
+  const socket = useSocket();
   return (
     <div className="flex gap-2 font-bold font-mono">
       {socket.id && <p>User: {socket.id}</p>}

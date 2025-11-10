@@ -2,8 +2,8 @@ import axios from "axios";
 import React, { useContext, useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { toast } from "react-toastify";
-import { LocalPort } from "../const";
-import { ThemeContext } from "../context/ThemeContext";
+import { serverPort } from "../const";
+import { ThemeContext } from "../context/ThemeProvider";
 
 export default function Signup() {
   const [userName, setUserName] = useState("");
@@ -37,7 +37,7 @@ export default function Signup() {
     setLoading(true);
     e.preventDefault();
     axios
-      .post(`${LocalPort}/api/signup`, {
+      .post(`${serverPort}/api/signup`, {
         userName,
         email,
         password,

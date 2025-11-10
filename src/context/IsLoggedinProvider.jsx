@@ -13,8 +13,6 @@ export function IsLoggedinProvider({ children }) {
   const logginUser = (userData) => {
     setUser(userData);
     setIsLoggedin(true);
-    const incomingCookie = document.cookie.split("=")[1];
-    setCookie("uid", incomingCookie);
   };
 
   const loggoutUser = () => {

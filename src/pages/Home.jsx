@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import { ThemeContext } from "../context/ThemeContext";
-import { IsLoggedinContext } from "../context/IsLoggedinContext";
+import { ThemeContext } from "../context/ThemeProvider";
+import { IsLoggedinContext } from "../context/IsLoggedinProvider";
 
 export default function HOME() {
   const { darkMode } = useContext(ThemeContext);

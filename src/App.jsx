@@ -7,10 +7,11 @@ import Chats from "./pages/Chats.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 import HOME from "./pages/Home.jsx";
 import Navbar from "./components/Navbar.jsx";
-import { ThemeContext } from "./context/ThemeContext.jsx";
+import { ThemeContext } from "./context/ThemeProvider.jsx";
 import axios from "axios";
-import { LocalPort } from "./const.js";
-import { IsLoggedinContext } from "./context/IsLoggedinContext.jsx";
+import { serverPort } from "./const.js";
+import { IsLoggedinContext } from "./context/IsLoggedinProvider.jsx";
+import VideoCall from "./pages/VideoCall.jsx";
 
 export default function App() {
   const { logginUser } = useContext(IsLoggedinContext);
@@ -20,7 +21,7 @@ export default function App() {
 
   useEffect(() => {
     axios
-      .post(`${LocalPort}/api/refresh`, {}, { withCredentials: true })
+      .post(`${serverPort}/api/refresh`, {}, { withCredentials: true })
       .then((response) => {
         if (response?.data) {
           logginUser(response.data);
@@ -47,6 +48,7 @@ export default function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/chats" element={<Chats />} />
           <Route path="/signin" element={<Signin />} />
+          <Route path="/videocall" element={<VideoCall />} />
         </Routes>
         <Footer />
       </div>

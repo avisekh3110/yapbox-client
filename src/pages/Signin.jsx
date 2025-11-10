@@ -3,9 +3,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { LocalPort } from "../const";
-import { ThemeContext } from "../context/ThemeContext";
-import { IsLoggedinContext } from "../context/IsLoggedinContext";
+import { serverPort } from "../const";
+import { ThemeContext } from "../context/ThemeProvider";
+import { IsLoggedinContext } from "../context/IsLoggedinProvider";
 import openEye from "/open.svg";
 import closeEye from "/close.svg";
 
@@ -37,7 +37,7 @@ export default function Signin() {
     e.preventDefault();
     axios
       .post(
-        `${LocalPort}/api/signin`,
+        `${serverPort}/api/signin`,
         {
           email,
           password,
@@ -53,6 +53,7 @@ export default function Signin() {
         }
       })
       .catch((err) => {
+        console.log(err);
         setLoading(false);
         if (!err.response) {
           errorToast("Network error. Please try again later.");
@@ -60,6 +61,7 @@ export default function Signin() {
           return;
         }
         //User not found
+        console.log(err.response.status);
         err.response?.status == 404 && noUserToast();
         //Validation error
         if (err.response?.status == 400) {
