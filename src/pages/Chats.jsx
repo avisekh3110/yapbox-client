@@ -71,17 +71,18 @@ export default function Chats() {
       {/* <ConnectionState isConnected={isConnected} />
       <ConnectionManager /> */}
 
-      <div className="h-14 flex justify-between items-center gap-2">
+      <div className="h-14 flex justify-center items-center gap-2">
         <div className="px-6 font-medium bg-secondary-dark-c w-[85%] h-full flex justify-start items-center rounded-sm">
           WORLD CHAT
         </div>
-        <div className="flex w-[15%] h-full justify-between items-center rounded-sm px-5 gap-2 bg-white">
+        <div className="flex w-[15%] h-full justify-center items-center rounded-sm px-5 gap-2 bg-white">
           <Link to={"/videocall"} className="cursor-pointer">
-            <img className="h-7 " src={vclogo} alt="videocall" />
+            <img
+              className="min-h-6 min-w-6 h-7 w-7 "
+              src={vclogo}
+              alt="videocall"
+            />
           </Link>
-          <button>
-            <img className="h-7" src={aclogo} alt="audiocall" />
-          </button>
         </div>
       </div>
       <div

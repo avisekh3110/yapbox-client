@@ -20,22 +20,24 @@ function VideoCall() {
   const [connected, setConnected] = useState(false);
   const [remoteUser, setRemoteUser] = useState(null);
   const [myStream, setMyStream] = useState();
-  const [remoteStream, setRemoteStream] = useState();
+  const [remoteUserStream, setRemoteStream] = useState();
 
   const socket = useSocket();
   const { user } = useContext(IsLoggedinContext);
   const username = user.username;
+
   const handleClick = useCallback(() => {
     socket.emit("join-room", { callId, username });
   }, [callId, username, socket]);
 
   const handleJoinRoom = useCallback((data) => {
     const { callId, username } = data;
+    console.log(`joined room ${callId} as ${username}`);
   }, []);
 
   const handleUserJoined = useCallback(({ username, id }) => {
-    userJoinedToast(username);
     if (id != socket.id) {
+      userJoinedToast(username);
       setRemoteUser(id);
     }
   }, []);
@@ -46,22 +48,28 @@ function VideoCall() {
       audio: true,
       video: true,
     });
+    setMyStream(stream);
+
+    // stream.getTracks().forEach((track) => {
+    //   peer.peer.addTrack(track, stream);
+    // });
     const offer = await peer.getOffer();
     socket.emit("user-call", { to: remoteUser, offer });
-    setMyStream(stream);
+    console.log("stream created!!");
   }, [remoteUser, socket]);
 
   const handleIncommingCall = useCallback(
     async ({ from, offer }) => {
+      console.log(`Incoming call from ${from}`);
+      console.log(offer);
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: true,
         video: true,
       });
       setMyStream(stream);
-      console.log(offer);
-      for (const track of stream.getTracks()) {
-        peer.peer.addTrack(track, stream);
-      }
+      // stream.getTracks().forEach((track) => {
+      //   peer.peer.addTrack(track, stream);
+      // });
       const ans = await peer.getAnswer(offer);
       socket.emit("call-accepted", { to: from, ans });
     },
@@ -76,16 +84,19 @@ function VideoCall() {
 
   const handleCallAccepted = useCallback(
     ({ from, ans }) => {
+      console.log(ans);
       peer.setLocalDescription(ans);
-      console.log("Call accepted!!");
+      console.log(`${from} Accepted the call!!`);
       sendStream();
     },
     [sendStream]
   );
 
   const handleNegoNeeded = useCallback(async () => {
+    if (!remoteUser) return; // avoid negotiation before peer is known
+    console.log("Negotiation needed...");
     const offer = await peer.getOffer();
-    socket.emit("peer-nego-needed", { offer, to: remoteUser });
+    socket.emit("peer-nego-needed", { to: remoteUser, offer });
   }, [remoteUser, socket]);
 
   const handleNegoIncomming = useCallback(
@@ -96,8 +107,10 @@ function VideoCall() {
     [socket]
   );
 
-  const handleNegoFinal = useCallback(async (ans) => {
+  const handleNegoFinal = useCallback(async ({ ans }) => {
     await peer.setLocalDescription(ans);
+    console.log("Negotiation Done!!");
+    setConnected(true);
   }, []);
 
   //for negotiation
@@ -114,21 +127,22 @@ function VideoCall() {
       const remoteStream = ev.streams;
       console.log("GOT TRACKS!!");
       setRemoteStream(remoteStream[0]);
+      console.log(remoteStream[0] instanceof MediaStream);
     });
   }, []);
 
   //for sockets
   useEffect(() => {
-    socket.on("user-joined", handleUserJoined);
     socket.on("join-room", handleJoinRoom);
+    socket.on("user-joined", handleUserJoined);
     socket.on("incomming-call", handleIncommingCall);
     socket.on("call-accepted", handleCallAccepted);
     socket.on("peer-nego-needed", handleNegoIncomming);
     socket.on("peer-nego-final", handleNegoFinal);
 
     return () => {
-      socket.off("user-joined", handleUserJoined);
       socket.off("join-room", handleJoinRoom);
+      socket.off("user-joined", handleUserJoined);
       socket.off("incomming-call", handleIncommingCall);
       socket.off("call-accepted", handleCallAccepted);
       socket.off("peer-nego-needed", handleNegoIncomming);
@@ -140,6 +154,8 @@ function VideoCall() {
     handleJoinRoom,
     handleIncommingCall,
     handleCallAccepted,
+    handleNegoIncomming,
+    handleNegoFinal,
   ]);
 
   return (
@@ -170,8 +186,9 @@ function VideoCall() {
         <div className="h-full w-[70%] border border-gray-700 rounded-sm">
           <video
             ref={(video) => {
-              if (video && remoteStream) {
-                video.srcObject = remoteStream;
+              if (video && remoteUserStream) {
+                console.log(remoteUserStream);
+                video.srcObject = remoteUserStream;
               }
             }}
             autoPlay
@@ -197,10 +214,13 @@ function VideoCall() {
               {connected ? "Connected!" : "Calling..."}
             </p>
           )}
+          {remoteUserStream && (
+            <p className="text-green-400 mt-2">connected!</p>
+          )}
         </div>
       </div>
       <div className=" w-full flex justify-center items-center h-[10%] gap-2 p-2 ">
-        <button className="h-[90%] flex items-center justify-center bg-gray-500 px-6 rounded-sm font-semibold">
+        <button className="h-[90%] flex items-center justify-center bg-gray-500  hover:bg-gray-700 cursor-pointer px-6 rounded-sm font-semibold">
           MUTE
         </button>
         {inCall ? (
@@ -218,7 +238,7 @@ function VideoCall() {
         )}
         <button
           onClick={sendStream}
-          className="h-[90%] flex items-center justify-center bg-gray-500 px-6 rounded-sm font-semibold"
+          className="h-[90%] flex items-center justify-center bg-gray-500 hover:bg-gray-700 cursor-pointer px-6 rounded-sm font-semibold"
         >
           VIDEO
         </button>
