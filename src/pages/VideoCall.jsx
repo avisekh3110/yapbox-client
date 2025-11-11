@@ -19,8 +19,23 @@ function VideoCall() {
   const [inCall, setInCall] = useState(false);
   const [connected, setConnected] = useState(false);
   const [remoteUser, setRemoteUser] = useState(null);
-  const [myStream, setMyStream] = useState();
-  const [remoteUserStream, setRemoteStream] = useState();
+  const [myStream, setMyStream] = useState(null);
+  const [remoteUserStream, setRemoteStream] = useState(null);
+
+  const myVideoRef = useRef(null);
+  const remoteVideoRef = useRef(null);
+
+  useEffect(() => {
+    if (myVideoRef.current && myStream) {
+      myVideoRef.current.srcObject = myStream;
+    }
+  }, [myStream]);
+
+  useEffect(() => {
+    if (remoteVideoRef.current && remoteUserStream) {
+      remoteVideoRef.current.srcObject = remoteUserStream;
+    }
+  }, [remoteUserStream]);
 
   const socket = useSocket();
   const { user } = useContext(IsLoggedinContext);
@@ -96,6 +111,7 @@ function VideoCall() {
     if (!remoteUser) return; // avoid negotiation before peer is known
     console.log("Negotiation needed...");
     const offer = await peer.getOffer();
+
     socket.emit("peer-nego-needed", { to: remoteUser, offer });
   }, [remoteUser, socket]);
 
@@ -185,27 +201,16 @@ function VideoCall() {
       <div className="h-[80%] w-full border border-gray-700 p-2 flex justify-between rounded-sm">
         <div className="h-full w-[70%] border border-gray-700 rounded-sm">
           <video
-            ref={(video) => {
-              if (video && remoteUserStream) {
-                console.log(remoteUserStream);
-                video.srcObject = remoteUserStream;
-              }
-            }}
+            ref={remoteVideoRef}
             autoPlay
-            muted
             playsInline
             className="w-full h-full rounded"
           />
         </div>
         <div className="h-40 w-[28%] border border-gray-700 rounded-sm">
           <video
-            ref={(video) => {
-              if (video && myStream) {
-                video.srcObject = myStream;
-              }
-            }}
+            ref={myVideoRef}
             autoPlay
-            muted
             playsInline
             className="w-full h-full rounded"
           />
